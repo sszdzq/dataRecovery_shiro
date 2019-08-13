@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zgzcwy.dao.UserMapper">
+   <select id="findUserByLoginname" resultType="com.zgzcwy.entity.User">
+   		select 
+   			*
+   		from
+   			sjhf_user
+   		where
+   			LOGINNAME=#{loginname}
+   </select>
+   <select id="findPermissionListByUserId" resultType="com.zgzcwy.entity.SysPermission">
+   		SELECT * FROM sjhf_permission WHERE id IN (SELECT 
+	    PERMISSIONID
+	    FROM
+	    sjhf_rolepermission
+            WHERE
+            ROLEID
+            IN(SELECT ROLEID FROM
+            sjhf_user
+            WHERE USERID=#{userid}))
+   </select>
+</mapper>
